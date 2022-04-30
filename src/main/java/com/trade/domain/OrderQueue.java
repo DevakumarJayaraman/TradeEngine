@@ -2,15 +2,15 @@ package com.trade.domain;
 
 import java.util.PriorityQueue;
 
-public class OrderQueue {
-	static PriorityQueue<Order> buyQueue = new PriorityQueue<>();
-	static PriorityQueue<Order> sellQueue = new PriorityQueue<>();
+public class OrderQueue<T> {
+	PriorityQueue<T> buyQueue = new PriorityQueue<>();
+	PriorityQueue<T> sellQueue = new PriorityQueue<>();
 
-	public static PriorityQueue<Order> getBuyQueue() {
+	public PriorityQueue<T> getBuyQueue() {
 		return buyQueue;
 	}
 
-	public static PriorityQueue<Order> getSellQueue() {
+	public PriorityQueue<T> getSellQueue() {
 		return sellQueue;
 	}
 }

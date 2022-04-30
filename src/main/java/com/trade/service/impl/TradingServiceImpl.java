@@ -1,5 +1,10 @@
 package com.trade.service.impl;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.stereotype.Component;
 
 import com.trade.domain.Order;
@@ -9,12 +14,33 @@ import com.trade.service.TradingService;
 
 @Component
 public class TradingServiceImpl implements TradingService {
+
+	private OrderQueue<Order> orderQueue = new OrderQueue<>();
+
 	@Override
 	public void placeOrder(Order order) {
 		if (OrderSide.BUY == order.getSide()) {
-			OrderQueue.getBuyQueue().add(order);
+			orderQueue.getBuyQueue().add(order);
 		} else {
-			OrderQueue.getSellQueue().add(order);
+			orderQueue.getSellQueue().add(order);
 		}
+	}
+
+	@Override
+	public Map<String, List<Order>> getOrderBook(int limit) {
+		Map<String, List<Order>> orderBook = new HashMap<>();
+		List<Order> buyList = new ArrayList<>();
+		List<Order> sellList = new ArrayList<>();
+		int buyQueueLimit = limit > orderQueue.getBuyQueue().size() ? orderQueue.getBuyQueue().size() : limit;
+		int sellQueueLimit = limit > orderQueue.getSellQueue().size() ? orderQueue.getSellQueue().size() : limit;
+		for (int i = 0; i < buyQueueLimit; i++) {
+			buyList.add(orderQueue.getBuyQueue().poll());
+		}
+		for (int i = 0; i < sellQueueLimit; i++) {
+			sellList.add(orderQueue.getSellQueue().poll());
+		}
+		orderBook.put("buyList", buyList);
+		orderBook.put("sellList", sellList);
+		return orderBook;
 	}
 }
