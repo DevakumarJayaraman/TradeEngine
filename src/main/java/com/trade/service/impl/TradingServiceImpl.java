@@ -1,19 +1,20 @@
 package com.trade.service.impl;
 
-import java.util.LinkedList;
-
 import org.springframework.stereotype.Component;
 
 import com.trade.domain.Order;
+import com.trade.domain.OrderQueue;
+import com.trade.domain.OrderSide;
 import com.trade.service.TradingService;
 
 @Component
 public class TradingServiceImpl implements TradingService {
-
-	LinkedList<Order> buyList = new LinkedList<>();
-
 	@Override
 	public void placeOrder(Order order) {
-		buyList.push(e);
+		if (OrderSide.BUY == order.getSide()) {
+			OrderQueue.getBuyQueue().add(order);
+		} else {
+			OrderQueue.getSellQueue().add(order);
+		}
 	}
 }
