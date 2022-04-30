@@ -34,10 +34,16 @@ public class TradingServiceImpl implements TradingService {
 		int buyQueueLimit = limit > orderQueue.getBuyQueue().size() ? orderQueue.getBuyQueue().size() : limit;
 		int sellQueueLimit = limit > orderQueue.getSellQueue().size() ? orderQueue.getSellQueue().size() : limit;
 		for (int i = 0; i < buyQueueLimit; i++) {
-			buyList.add(orderQueue.getBuyQueue().poll());
+			Order buyOrder = orderQueue.getBuyQueue().poll();
+			if (buyOrder != null) {
+				buyList.add(buyOrder);
+			}
 		}
 		for (int i = 0; i < sellQueueLimit; i++) {
-			sellList.add(orderQueue.getSellQueue().poll());
+			Order sellOrder = orderQueue.getSellQueue().poll();
+			if (sellOrder != null) {
+				sellList.add(sellOrder);
+			}
 		}
 		orderBook.put("buyList", buyList);
 		orderBook.put("sellList", sellList);

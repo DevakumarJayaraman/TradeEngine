@@ -36,12 +36,12 @@ public class TradingEndpoint {
 
 		for (int i = 0; i <= limit; i++) {
 			htmlBuilder.append("<tr>");
-			if (buyList.size() > i) {
+			if (i < buyList.size()) {
 				htmlBuilder.append("<td>" + buyList.get(i).getQuantity() + "</td>");
 				htmlBuilder.append("<td>" + buyList.get(i).getPrice() + "</td>");
 				htmlBuilder.append("<td>" + buyList.get(i).getTime() + "</td>");
 			}
-			if (sellList.size() > i) {
+			if (i < sellList.size()) {
 				htmlBuilder.append("<td>" + sellList.get(i).getQuantity() + "</td>");
 				htmlBuilder.append("<td>" + sellList.get(i).getPrice() + "</td>");
 				htmlBuilder.append("<td>" + sellList.get(i).getTime() + "</td>");
